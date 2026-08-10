@@ -9,8 +9,8 @@ return {
   height = 12,
   tilewidth = 40,
   tileheight = 40,
-  nextlayerid = 11,
-  nextobjectid = 38,
+  nextlayerid = 12,
+  nextobjectid = 41,
   properties = {
     ["name"] = "Test Map - Room 1"
   },
@@ -32,46 +32,12 @@ return {
       visible = true,
       opacity = 1,
       offsetx = 0,
-      offsety = 0,
+      offsety = -80,
       parallaxx = 1,
       parallaxy = 1,
       repeatx = false,
       repeaty = false,
       properties = {}
-    },
-    {
-      type = "imagelayer",
-      image = "../../../assets/sprites/tilesets/sunrise_back_clouds_fore.png",
-      id = 10,
-      name = "bg_clouds",
-      class = "",
-      visible = true,
-      opacity = 1,
-      offsetx = 0,
-      offsety = 70,
-      parallaxx = 1,
-      parallaxy = 1,
-      repeatx = false,
-      repeaty = false,
-      properties = {}
-    },
-    {
-      type = "imagelayer",
-      image = "../../../assets/sprites/tilesets/floor.png",
-      id = 9,
-      name = "bg_floor",
-      class = "",
-      visible = true,
-      opacity = 1,
-      offsetx = -80,
-      offsety = 360,
-      parallaxx = 1,
-      parallaxy = 1,
-      repeatx = true,
-      repeaty = false,
-      properties = {
-        ["physics.speed"] = -5
-      }
     },
     {
       type = "objectgroup",
@@ -93,9 +59,9 @@ return {
           type = "",
           shape = "rectangle",
           x = 640,
-          y = 360,
+          y = 200,
           width = 40,
-          height = 120,
+          height = 160,
           rotation = 0,
           visible = true,
           properties = {}
@@ -106,9 +72,9 @@ return {
           type = "",
           shape = "rectangle",
           x = -40,
-          y = 360,
+          y = 200,
           width = 40,
-          height = 120,
+          height = 160,
           rotation = 0,
           visible = true,
           properties = {}
@@ -119,7 +85,7 @@ return {
           type = "",
           shape = "rectangle",
           x = 0,
-          y = 320,
+          y = 160,
           width = 640,
           height = 40,
           rotation = 0,
@@ -132,9 +98,38 @@ return {
           type = "",
           shape = "rectangle",
           x = 0,
-          y = 480,
+          y = 360,
           width = 640,
           height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        }
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 11,
+      name = "objects2",
+      class = "",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {},
+      objects = {
+        {
+          id = 40,
+          name = "clouds2",
+          type = "",
+          shape = "point",
+          x = 0,
+          y = -40,
+          width = 0,
+          height = 0,
           rotation = 0,
           visible = true,
           properties = {}
@@ -154,7 +149,34 @@ return {
       parallaxx = 1,
       parallaxy = 1,
       properties = {},
-      objects = {}
+      objects = {
+        {
+          id = 38,
+          name = "ground",
+          type = "",
+          shape = "point",
+          x = 0,
+          y = 200,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 39,
+          name = "clouds",
+          type = "",
+          shape = "point",
+          x = 0,
+          y = 0,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        }
+      }
     },
     {
       type = "objectgroup",
@@ -176,7 +198,7 @@ return {
           type = "",
           shape = "point",
           x = 40,
-          y = 440,
+          y = 280,
           width = 0,
           height = 0,
           rotation = 0,

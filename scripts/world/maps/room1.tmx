@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.11" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="16" height="12" tilewidth="40" tileheight="40" infinite="0" nextlayerid="11" nextobjectid="38">
+<map version="1.11" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="16" height="12" tilewidth="40" tileheight="40" infinite="0" nextlayerid="12" nextobjectid="41">
  <editorsettings>
   <export target="room1.lua" format="lua"/>
  </editorsettings>
@@ -7,27 +7,30 @@
   <property name="name" value="Test Map - Room 1"/>
  </properties>
  <tileset firstgid="1" source="../tilesets/castle.tsx"/>
- <imagelayer id="7" name="bg_sun">
+ <imagelayer id="7" name="bg_sun" offsetx="0" offsety="-80">
   <image source="../../../assets/sprites/tilesets/sunrise_back_cliffs.png" width="640" height="300"/>
  </imagelayer>
- <imagelayer id="10" name="bg_clouds" offsetx="0" offsety="70">
-  <image source="../../../assets/sprites/tilesets/sunrise_back_clouds_fore.png" width="1120" height="300"/>
- </imagelayer>
- <imagelayer id="9" name="bg_floor" offsetx="-80" offsety="360" repeatx="1">
-  <image source="../../../assets/sprites/tilesets/floor.png" width="800" height="120"/>
-  <properties>
-   <property name="physics.speed" type="float" value="-5"/>
-  </properties>
- </imagelayer>
  <objectgroup color="#0000ff" id="3" name="collision" opacity="0.5">
-  <object id="4" x="640" y="360" width="40" height="120"/>
-  <object id="16" x="-40" y="360" width="40" height="120"/>
-  <object id="17" x="0" y="320" width="640" height="40"/>
-  <object id="37" x="0" y="480" width="640" height="40"/>
+  <object id="4" x="640" y="200" width="40" height="160"/>
+  <object id="16" x="-40" y="200" width="40" height="160"/>
+  <object id="17" x="0" y="160" width="640" height="40"/>
+  <object id="37" x="0" y="360" width="640" height="40"/>
  </objectgroup>
- <objectgroup color="#ff00ff" id="4" name="objects"/>
+ <objectgroup id="11" name="objects2">
+  <object id="40" name="clouds2" x="0" y="-40">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup color="#ff00ff" id="4" name="objects">
+  <object id="38" name="ground" x="0" y="200">
+   <point/>
+  </object>
+  <object id="39" name="clouds" x="0" y="0">
+   <point/>
+  </object>
+ </objectgroup>
  <objectgroup color="#7f00ff" id="5" name="markers">
-  <object id="20" name="spawn" x="40" y="440">
+  <object id="20" name="spawn" x="40" y="280">
    <point/>
   </object>
  </objectgroup>

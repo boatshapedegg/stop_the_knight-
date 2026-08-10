@@ -12,7 +12,22 @@ function Dummy:init()
     self.background = false
 
     -- Add the dummy enemy to the encounter
-    self:addEnemy("dummy")
+    self:addEnemy("dummy", 550, 280)
+end
+
+function Dummy:getPartyPosition(index)
+    local x = 80
+    local y
+
+    if index == 3 then y = 210
+    elseif index == 2 then y = 150
+    elseif index == 1 then y = 40 end
+    
+    local battler = Game.battle.party[index]
+    local ox, oy = battler.chara:getBattleOffset()
+    x = x + (battler.actor:getWidth() / 2 + ox) * 2
+    y = y + (battler.actor:getHeight() + oy) * 2
+    return x, y
 end
 
 return Dummy

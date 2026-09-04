@@ -12,7 +12,7 @@ function Dummy:init()
     self.background = false
 
     -- Add the dummy enemy to the encounter
-    self:addEnemy("dummy", 550, 280)
+    self:addEnemy("knight", 550, 280)
 end
 
 function Dummy:getPartyPosition(index)
@@ -20,8 +20,8 @@ function Dummy:getPartyPosition(index)
     local y
 
     if index == 3 then y = 210
-    elseif index == 2 then y = 150
-    elseif index == 1 then y = 40 end
+    elseif index == 1 then y = 150
+    elseif index == 2 then y = 40 end
     
     local battler = Game.battle.party[index]
     local ox, oy = battler.chara:getBattleOffset()

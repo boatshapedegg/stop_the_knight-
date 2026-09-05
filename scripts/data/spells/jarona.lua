@@ -37,6 +37,8 @@ function spell:onCast(user, target)
 
     Game:getPartyMember("flowery"):setFlag("afterimage", false)
 
+    target:setFlag("hover", false)
+
     Game.battle.timer:after(1.5, function()
         Assets.playSound("flowery/" .. TableUtils.pick({"jarona_1", "jarona_2", "jarona_3", "jarona_4"}), 2, 1)
 
@@ -53,9 +55,10 @@ function spell:onCast(user, target)
         local next_x, next_y = math.random(tx - 50, tx + 50), math.random(ty + 10, ty + 120)
 
         Game.battle.timer:after(1, function()
+            target:setFlag("shake2", true)
             local timer = 0.6
 
-            local function jarona()
+            local function jarona(last)
                 user.x, user.y = next_x, next_y
                 next_x = math.random(tx - 60, tx + 60)
                 next_y = math.random(ty, ty + 140)
@@ -75,6 +78,9 @@ function spell:onCast(user, target)
                 Assets.playSound("scytheburst", 1, 0.6)
                 target:flash()
                 target:hurt(damage, user)
+                if last then
+                    target:setAnimation("static")
+                end
             end
 
             Game.battle.timer:script(function (wait)
@@ -102,9 +108,16 @@ function spell:onCast(user, target)
                 jarona()
                 wait(timer)
 
-                jarona()
+                jarona(true)
+                user:setScale(-2, 2)
+                Game.battle.timer:everyInstant(0.25, function()
+                    target:shake(math.random(4), math.random(4))
+                end, 12)
+                Game.battle.timer:everyInstant(1, function()
+                    target:flash()
+                end, 4)
                 wait(timer)
-                Game.battle.timer:tween(1.5, user, {x = target.x - 70, y = target.y})
+                Game.battle.timer:tween(1.5, user, {x = target.x - 150, y = target.y})
                 user:setAnimation("battle/spell_ready")
             end)
             Game.battle.timer:after(4, function ()
@@ -112,6 +125,9 @@ function spell:onCast(user, target)
                 user.layer = BATTLE_LAYERS["battlers"]
                 user:setAnimation("battle/deflect")
                 user:slideTo(ox, oy, 0.5)
+                target:setFlag("hover", true)
+                target:setFlag("shake2", false)
+                target:setAnimation("idle")
                 Game.battle.timer:after(0.75, function()
                     Game:getPartyMember("flowery"):setFlag("afterimage", true)
                     Game.battle:finishAction()

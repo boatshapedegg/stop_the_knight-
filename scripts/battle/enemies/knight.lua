@@ -82,52 +82,41 @@ function Dummy:selectWave()
     if turn % 6 == 0 then
         if hard == false then
             self.selected_wave = "knight/fountain_maker_1"
-            return "knight/fountain_maker_1"
         else
             self.selected_wave = "knight/fountain_maker_2"
-            return "knight/fountain_maker_2"
         end
     elseif turn % 5 == 0 then
         if hard == false then
             self.selected_wave = "knight/sword_corridor_1"
-            return "knight/sword_corridor_1"
         else
             self.selected_wave = "knight/sword_corridor_2"
-            return "knight/sword_corridor_2"
         end
     elseif turn % 4 == 0 then
         if hard == false then
             self.selected_wave = "knight/sword_box_1"
-            return "knight/sword_box_1"
         else
             self.selected_wave = "knight/sword_box_2"
-            return "knight/sword_box_2"
         end
     elseif turn % 3 == 0 then
         if hard == false then
             self.selected_wave = "knight/box_splitter_1"
-            return "knight/box_splitter_1"
         else
             self.selected_wave = "knight/box_splitter_2"
-            return "knight/box_splitter_2"
         end
     elseif turn % 2 == 0 then
         if hard == false then
             self.selected_wave = "knight/sword_trackers_1"
-            return "knight/sword_trackers_1"
         else
             self.selected_wave = "knight/sword_trackers_2"
-            return "knight/sword_trackers_2"
         end
     else
         if hard == false then
-            self.selected_wave = "knight/stars_1"
-            return "knight/stars_1"
+            self.selected_wave = "full_screen_test"
         else
             self.selected_wave = "knight/stars_2"
-            return "knight/stars_2"
         end
     end
+    return self.selected_wave
 end
 
 return Dummy

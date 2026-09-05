@@ -96,7 +96,7 @@ function actor:init()
         -- Battle offsets
         ["idle"] = {-20, 4},
 
-        ["wind_punch"] = {0, 0},
+        ["wind_punch"] = {0, -7},
         ["windup"] = {-5, 0},
         ["battle/attackready"] = {-8, -6},
         ["battle/act"] = {-6, -6},
@@ -130,14 +130,14 @@ function actor:onWorldUpdate(chara)
 end
 
 function actor:onBattleUpdate(battler)
-    self.hue = (self.hue + DT * 10 / 100) % 1
+    self.hue = (self.hue + DT * 12 / 100) % 1
     self.voice_timer = MathUtils.approach(self.voice_timer, 0, DTMULT)
 
     local flowery = Game:getPartyMember("flowery")
     local flowery2 = Game.battle:getPartyBattler("flowery")
 
     if flowery:getFlag("afterimage", false) then
-        if self.timer == 10 then
+        if self.timer == 15 then
             local afterimage = AfterImage(flowery2.sprite, 1, 0.02)
             afterimage.debug_select = false
             afterimage.physics.speed_x = -3

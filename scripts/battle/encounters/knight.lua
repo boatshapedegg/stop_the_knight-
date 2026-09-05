@@ -15,6 +15,10 @@ function Dummy:init()
     self:addEnemy("knight", 550, 280)
 end
 
+function Dummy:isAutoHealingEnabled(battler)
+    return true
+end
+
 function Dummy:canSwoon(target)
     if target.chara.id == "kris" then
         return false

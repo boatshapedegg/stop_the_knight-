@@ -27,7 +27,7 @@ function Dummy:getPartyPosition(index)
     local y
 
     if index == 3 then y = 210
-    elseif index == 1 then y = 150
+    elseif index == 1 then y = 170
     elseif index == 2 then y = 40 end
     
     local battler = Game.battle.party[index]

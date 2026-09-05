@@ -35,11 +35,10 @@ function spell:onCast(user, target)
 
     local ox, oy = user.x, user.y
 
-    user:setAnimation("battle/run_prepare")
+    Game:getPartyMember("flowery"):setFlag("afterimage", false)
 
     Game.battle.timer:after(1.5, function()
         Assets.playSound("flowery/" .. TableUtils.pick({"jarona_1", "jarona_2", "jarona_3", "jarona_4"}), 2, 1)
-        user:setAnimation("battle/run")
 
         user:slideTo(tx, ty + 80, 1, "in-quad")
 
@@ -114,6 +113,7 @@ function spell:onCast(user, target)
                 user:setAnimation("battle/deflect")
                 user:slideTo(ox, oy, 0.5)
                 Game.battle.timer:after(0.75, function()
+                    Game:getPartyMember("flowery"):setFlag("afterimage", true)
                     Game.battle:finishAction()
                 end)
             end)

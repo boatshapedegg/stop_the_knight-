@@ -94,7 +94,7 @@ function actor:init()
         ["slide"] = {0, 0},
 
         -- Battle offsets
-        ["idle"] = {0, 0},
+        ["idle"] = {-20, 4},
 
         ["wind_punch"] = {0, -10},
         ["windup"] = {-5, -10},

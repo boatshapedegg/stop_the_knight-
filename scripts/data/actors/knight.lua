@@ -81,7 +81,7 @@ function actor:init()
     self.timer = 0
 end
 
-function actor:onBattleUpdate(battler)
+--[[function actor:onBattleUpdate(battler)
     local knight = Game.battle:getEnemyBattler("knight")
     if knight:getFlag("afterimage", false) then
         if self.timer == 7 then
@@ -107,6 +107,32 @@ function actor:onBattleUpdate(battler)
     end
 
     if knight:getFlag("hover", false) == true then knight.y = 280 + math.sin(self.siner * 2) * 14 self.siner = self.siner + DT end
+end]]--
+
+function actor:onSpriteUpdate(sprite)
+    local knight = Game.battle:getEnemyBattler("knight")
+    if self.timer == 7 then
+        if knight.sprite.sprite then
+            self.afterimage = AfterImage(knight.sprite, 0.6, 0.015)
+            local afterimage = self.afterimage
+            afterimage.debug_select = false
+            afterimage.x = afterimage.x + 4
+            afterimage.physics.speed = -2
+            knight:addChild(afterimage)
+            self.timer = 0
+            if knight:getFlag("shake", false) then
+                afterimage.physics.direction = math.rad(math.random(-50, 50))
+            end
+            if knight:getFlag("shake2", false) then
+                afterimage.physics.direction = math.rad(math.random(360))
+            end
+        end
+    else
+        self.timer = self.timer + 1
+    end
+
+    self.siner = self.siner + DT
+    knight.y = 280 + math.sin(self.siner * 2) * 14
 end
 
 return actor

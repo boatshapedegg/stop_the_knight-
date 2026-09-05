@@ -96,8 +96,8 @@ function actor:init()
         -- Battle offsets
         ["idle"] = {-20, 4},
 
-        ["wind_punch"] = {0, -10},
-        ["windup"] = {-5, -10},
+        ["wind_punch"] = {0, 0},
+        ["windup"] = {-5, 0},
         ["battle/attackready"] = {-8, -6},
         ["battle/act"] = {-6, -6},
         ["battle/actend"] = {-6, -6},
@@ -107,7 +107,7 @@ function actor:init()
         ["deflect"] = {0, -3},
 
         ["battle/defeat"] = {-8, -5},
-        ["hurt"] = {0, 0},
+        ["hurt"] = {-4, 10},
 
         ["battle/intro"] = {-8, -9},
         ["battle/victory"] = {-3, 0},

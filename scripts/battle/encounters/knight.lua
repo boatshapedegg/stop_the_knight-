@@ -7,12 +7,19 @@ function Dummy:init()
     self.text = "* Stop the Knight!"
 
     -- Battle music ("battle" is rude buster)
-    self.music = "battle"
+    self.music = "flowerman"
     -- Enables the purple grid battle background
     self.background = false
 
     -- Add the dummy enemy to the encounter
     self:addEnemy("knight", 550, 280)
+end
+
+function Dummy:canSwoon(target)
+    if target.chara.id == "kris" then
+        return false
+    end
+    return true
 end
 
 function Dummy:getPartyPosition(index)

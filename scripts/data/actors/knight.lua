@@ -116,7 +116,7 @@ function actor:onSpriteUpdate(sprite)
             self.afterimage = AfterImage(knight.sprite, 0.6, 0.015)
             local afterimage = self.afterimage
             afterimage.debug_select = false
-            afterimage.x = afterimage.x + 4
+            afterimage.x = afterimage.x + 5
             afterimage.physics.speed = -2
             knight:addChild(afterimage)
             self.timer = 0

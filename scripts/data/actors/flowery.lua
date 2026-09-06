@@ -26,7 +26,7 @@ function actor:init()
     self.default = "walk"
 
     -- Sound to play when this actor speaks (optional)
-    self.voice = nil
+    self.voice = "flowery_1"
     -- Path to this actor's portrait for dialogue (optional)
     self.portrait_path = "face/flowery"
     -- Offset position for this actor's portrait (optional)

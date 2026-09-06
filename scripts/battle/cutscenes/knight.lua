@@ -5,7 +5,7 @@ return {
     ---@param cutscene BattleCutscene
     prophecy_breaker = function(cutscene, battler, enemy)
         -- Open textbox and wait for completion
-        local user = cutscene:getCharacter("flowery")
+        local user = Game.battle.encounter.flowery
         local target = cutscene:getCharacter("knight")
         local stop = false
         Game.battle.timer:everyInstant(0.25, function()
@@ -16,23 +16,22 @@ return {
             if stop == true then return false end
             target:flash()
         end)
-        cutscene:text("* nice moves raly", "wink", user)
+        cutscene:text("* nice moves raly", "wink", "flowery")
 
         cutscene:wait(1)
 
         cutscene:text("* fuck off", "angrier", "ralsei")
 
-        user:setScale(2)
-        user.layer = BATTLE_LAYERS["battlers"]
-        user:setAnimation("battle/deflect")
-        user:slideTo(119, 142, 0.5)
+        user:setScale(1)
+        user.layer = BATTLE_LAYERS["above_battlers"]
+        user:setAnimation("party/flowery/deflect", 0.2, true)
+        user:slideTo(40, 28, 0.5)
         target:setFlag("hover", true)
         target:setFlag("shake2", false)
         target:setAnimation("idle")
-        stop = stop
+        stop = true
         cutscene:wait(0.5)
-        cutscene:after(function ()
-            user:setAnimation("battle/idle")
-        end)
+        user:setAnimation("party/flowery/idle", 0.2, true)
+        Game.battle:finishAction()
     end
 }

@@ -51,7 +51,7 @@ function Dummy:onAct(battler, name)
    if name == "Standard" then --X-Action
         return "* There isn't time for this."
     elseif name == "Proph. Breaker" then
-        local user = "flowery"
+        local user = "ralsei"
         local user_index = Game.battle:getPartyIndex(user)
         local user_battler = Game.battle:getPartyBattler(user)
         local spell = Registry.createSpell("prophecy_breaker")
@@ -147,9 +147,9 @@ function Dummy:getAttackDamage(damage, battler, points)
     local ralsei = Game.battle:getPartyBattler("ralsei")
 
     multiplier = MathUtils.clamp(multiplier + Game.battle.turn_count / 100, 0, 0.35)
-    if battler.chara.id == "kris" and  ralsei.is_down == false then
+    if battler.chara.id == "kris" and not ralsei.is_down then
         multiplier = multiplier / 2
-    elseif battler.chara.id == "kris" and ralsei.is_down == true then
+    elseif battler.chara.id == "kris" and ralsei.is_down then
         multiplier = multiplier * 3.5
     end
 

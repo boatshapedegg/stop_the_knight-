@@ -7,6 +7,9 @@ function FakeFlowery:init(x, y)
     self.sprite:setScale(2)
     self.sprite:play(0.15)
 
+    self.width = 39
+    self.height = 61
+
     self.hue = 0
 
     self.timer = 0
@@ -23,7 +26,7 @@ function FakeFlowery:update()
         if self.timer == 15 then
             local afterimage = AfterImage(self.sprite, 1, 0.02)
             afterimage.debug_select = false
-            afterimage.physics.speed_x = -3
+            afterimage.physics.speed_x = -4
             afterimage.layer = -1
             afterimage:addFX(ColorMaskFX({ColorUtils.HSVToRGB(self.hue, 1, 0.8)}))
             self:addChild(afterimage)
@@ -32,6 +35,11 @@ function FakeFlowery:update()
             self.timer = self.timer + 1
         end
     end
+end
+
+function FakeFlowery:setAnimation(sprite, speed, loop)
+    self.sprite:setSprite(sprite)
+    self.sprite:play(speed, loop)
 end
 
 return FakeFlowery

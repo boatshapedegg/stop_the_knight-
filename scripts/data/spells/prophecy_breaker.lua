@@ -47,7 +47,7 @@ function spell:onCast(user, target)
         Game.battle.timer:every(0.125, function ()
             local afterimage = AfterImage(self.flowery.sprite, 1, 0.025)
             afterimage.debug_select = false
-            afterimage.physics.speed_x = -1
+            afterimage.physics.speed_x = -2
             afterimage:addFX(ColorMaskFX({0,68/255,248/255}, 1))
             self.flowery:addChild(afterimage)
         end, 44)
@@ -103,6 +103,13 @@ function spell:onCast(user, target)
                 target:hurt(math.floor(self:getDamage(user, target) * 1.5), user)
                 target:flash()
                 Game.battle.camera:shake(20, 0, 3)
+
+                local fire_big = Game.battle:addChild(Sprite("effects/fire_big", tx + 8, ty + 5))
+                fire_big:setScale(3)
+                Game.battle.timer:after(0.1, function()
+                    fire_big:fadeOutAndRemove(1)
+                end)
+                fire_big:setOrigin(0.5)
 
                 for i=1, 8 do
                     local angle = ((360/7) * i) * math.pi/180

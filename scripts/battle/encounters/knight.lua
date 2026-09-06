@@ -12,7 +12,38 @@ function Dummy:init()
     self.background = false
 
     -- Add the dummy enemy to the encounter
-    self:addEnemy("knight", 550, 280)
+    self.knight = self:addEnemy("knight", 550, 280)
+
+    self.f_voice_timer = 0
+
+    self.timery = 0
+
+    self.hue = 0
+end
+
+function Dummy:onBattleStart()
+    self.flowery = Game.battle:addChild(FakeFlowery(40, 28))
+end
+
+function Dummy:update()
+    super.update(self)
+
+    self.hue = (self.hue + DT * 12 / 100) % 1
+    self.f_voice_timer = MathUtils.approach(self.f_voice_timer, 0, DTMULT)
+
+    if self:getFlag("afterimage", false) then
+        if self.timery == 15 then
+            local afterimage = AfterImage(self.flowery, 1, 0.02)
+            afterimage.debug_select = false
+            afterimage.physics.speed_x = -3
+            afterimage.layer = -7500
+            afterimage:addFX(ColorMaskFX({ColorUtils.HSVToRGB(self.hue, 1, 0.8)}))
+            self.flowery:addChild(afterimage)
+            self.timery = 0
+        else
+            self.timery = self.timery + 1
+        end
+    end
 end
 
 function Dummy:getEncounterText()
@@ -55,9 +86,8 @@ function Dummy:getPartyPosition(index)
     local x = 80
     local y
 
-    if index == 3 then y = 210
-    elseif index == 1 then y = 170
-    elseif index == 2 then y = 40 end
+    if index == 2 then y = 210
+    elseif index == 1 then y = 170 end
     
     local battler = Game.battle.party[index]
     local ox, oy = battler.chara:getBattleOffset()

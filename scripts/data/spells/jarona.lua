@@ -79,7 +79,7 @@ function spell:onCast(user, target)
                 local damage = self:getDamage(user, target, false)
                 Assets.playSound("scytheburst", 1, 0.6)
                 target:flash()
-                target:hurt(damage, user)
+                target:hurt(damage, nil, nil, {{254/255, 229/255, 2/255}}, true)
                 target:setAnimation("static")
             end
 

@@ -47,6 +47,7 @@ function Dummy:init()
     self.battle_offset = {0, 10}
 
     self:registerAct("Proph. Breaker", "Change The\nFuture", {"ralsei"}, 75, self, {"party/flowery/icon/head"})
+    self:registerAct("Jarona", "His\nJarona", nil, 99, self, {"party/flowery/icon/head"})
 end
 
 function Dummy:onTurnEnd()
@@ -57,57 +58,32 @@ function Dummy:onTurnEnd()
 end
 
 function Dummy:onAct(battler, name)
-    if name == "Standard" then --X-Action
+    if name == "Standard" then
         return "* There isn't time for this."
     elseif name == "Proph. Breaker" then
         Game.battle:powerAct("prophecy_breaker", battler, "ralsei", self)
+    elseif name == "Jarona" then
+        Game.battle:powerAct("jarona", battler, "ralsei", self)
     elseif name == "Check" then
         return "* No info found!"
-    
     elseif name == "X-Slash" then
-        local kris = Game.battle:getPartyBattler("kris")
-        local damage = math.floor((((kris.chara:getStat("attack") * 150) / 20) - 3 * (self.defense)) * 1.3)
-        local function generateSlash(scale_x)
-        local cutAnim = Sprite("effects/attack/cut")
-        Assets.playSound("scytheburst")
-        Assets.playSound("criticalswing", 1.2, 1.3)
-        kris.overlay_sprite:setAnimation("battle/attack") -- Makes the afterimages use the first frame of the attack animation
-        kris:toggleOverlay(true)
-        local afterimage1 = AfterImage(kris, 0.5)
-        local afterimage2 = AfterImage(kris, 0.6)
-        kris:toggleOverlay(false)
-        afterimage1.physics.speed_x = 2.5
-        afterimage2.physics.speed_x = 5
-        afterimage2:setLayer(afterimage1.layer - 1)
-        kris:setAnimation("battle/attack", function()
-        kris:setAnimation("battle/idle")
-        end)
-        kris:flash()
-        cutAnim:setOrigin(0.5, 0.5)
-        cutAnim:setScale(2.5 * scale_x, 2.5)
-        cutAnim:setPosition(self:getRelativePos(self.width/2, self.height/2))
-        cutAnim.layer = self.layer + 0.01
-        cutAnim:play(1/15, false, function(s) s:remove() end)
-        kris.parent:addChild(cutAnim)
-        kris.parent:addChild(afterimage1)
-        kris.parent:addChild(afterimage2)
-        end
-
-        Game.battle.timer:after(0.1/2, function()
-        generateSlash(1)
-        self:hurt(math.floor((damage * multiplier) * 3.25), kris)
-        Game.battle.timer:after(1/2, function()
-        generateSlash(-1)
-        self:hurt(math.floor((damage * multiplier) * 3.25), kris)
-        end)
-        end)
-        end
-        return "* Kris used X-SLASH!"
+        local user = "kris"
+        local user_index = Game.battle:getPartyIndex(user)
+        local user_battler = Game.battle:getPartyBattler(user)
+        local spell = Registry.createSpell("xslash")
+        local target = self
+        local menu_item = {
+            data = spell,
+            tp = 0,
+        }
+        Game.battle:pushAction("SPELL", target, menu_item, user_index)
+        Game.battle:markAsFinished(nil, {user})
     end
     
 
     -- If the act is none of the above, run the base onAct function
     -- (this handles the Check act)
+end
     
 
 function Dummy:getHealthDisplay()

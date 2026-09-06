@@ -10,7 +10,7 @@ function Basic:onStart()
     super.onStart(self)
     -- Every 0.33 seconds...
     self.knives = {}
-    self.timer:everyInstant(1.75, function()
+    self.timer:everyInstant(1.25, function()
         local counter = 1
         local offsetx = math.random(-500, 10)
         self.timer:everyInstant(0.15, function()

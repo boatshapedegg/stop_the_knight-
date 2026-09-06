@@ -43,11 +43,25 @@ function Dummy:init()
     }
 
     self.battle_offset = {0, 10}
+
+    self:registerAct("Proph. Breaker", "Change The\nFuture", {"ralsei"}, 75, {Game.battle:getPartyBattler("ralsei")}, {"party/flowery/icon/head"})
 end
 
 function Dummy:onAct(battler, name)
    if name == "Standard" then --X-Action
         return "* There isn't time for this."
+    elseif name == "Proph. Breaker" then
+        local user = "flowery"
+        local user_index = Game.battle:getPartyIndex(user)
+        local user_battler = Game.battle:getPartyBattler(user)
+        local spell = Registry.createSpell("prophecy_breaker")
+        local target = self
+        local menu_item = {
+            data = spell,
+            tp = 0,
+        }
+        Game.battle:pushAction("SPELL", target, menu_item, user_index)
+        Game.battle:markAsFinished(nil, {user})
     end
 
     -- If the act is none of the above, run the base onAct function
@@ -59,11 +73,17 @@ function Dummy:getHealthDisplay()
     return "???"
 end
 
-function Dummy:onHurt(damage, battler)
+function Dummy:onHurt(damage, battler, hurt)
     if damage > 100 then
         self:setFlag("shake", true)
 
-        super.onHurt(self, damage, battler)
+        if hurt == false then
+            self:toggleOverlay(true)
+            if not self:getActiveSprite():setAnimation("hurt") then
+                self:toggleOverlay(false)
+            end
+        end
+        self:getActiveSprite():shake(9, 0, 1, 2 / 30, true)
     else
         self:getActiveSprite():shake(5, 0, 1, 2 / 30, true)
     end

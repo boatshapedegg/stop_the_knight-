@@ -74,13 +74,11 @@ function spell:onCast(user, target)
 
                 Game.battle.timer:tween(timer - 0.05, user, {x = next_x, y = next_y})
                 user:setAnimation(TableUtils.pick({"punch", "kick", "flashkick", "axe_kick"}))
-                local damage = self:getDamage(user, target)
+                local damage = self:getDamage(user, target, false)
                 Assets.playSound("scytheburst", 1, 0.6)
                 target:flash()
                 target:hurt(damage, user)
-                if last then
-                    target:setAnimation("static")
-                end
+                target:setAnimation("static")
             end
 
             Game.battle.timer:script(function (wait)

@@ -66,7 +66,7 @@ function spell:onCast(user, target)
                 local damage = self:getDamage(user, target) * 4
                 Assets.playSound("scytheburst", 1, 0.6)
                 target:flash()
-                target:hurt(damage, user)
+                target:hurt(damage, user, false)
                 target:setAnimation("static")
             end
 
@@ -95,24 +95,24 @@ function spell:onCast(user, target)
                 wait(0.35)
                 user:setAnimation("axe_kick")
                 Assets.playSound("bump", 2, 1)
-                fire.rotation = Utils.angle(fire.x, fire.y, tx, ty + 10)
+                fire.rotation = Utils.angle(fire.x, fire.y, tx, ty - 5)
                 fire.physics.speed = fire.physics.speed + 1
                 wait(0.3)
                 fire:remove()
                 Assets.playSound("bomb", 1.75, 1)
-                target:hurt(self:getDamage(user, target) * 7, user)
+                target:hurt(self:getDamage(user, target) * 7, user, false)
                 target:flash()
                 Game.battle.camera:shake(5, 0)
 
                 for i=1, 8 do
                     local angle = ((360/7) * i) * math.pi/180
                     local x_circ = 1 * math.cos(angle) + tx
-                    local y_circ = 1 * math.sin(angle) + ty + 10
+                    local y_circ = 1 * math.sin(angle) + ty - 5
                     local fire_small = Game.battle:addChild(Sprite("effects/fire_small", x_circ, y_circ))
                     fire_small:setScale(2)
-                    fire_small.physics.direction = -Utils.angle(fire_small.x, fire_small.y, tx, ty + 10)
-                    fire_small.physics.speed = 3
-                    fire_small.physics.spin = math.rad(5)
+                    fire_small.physics.direction = -Utils.angle(fire_small.x, fire_small.y, tx, ty - 5)
+                    fire_small.physics.speed = 2
+                    fire_small.physics.spin = math.rad(8)
                     fire_small.physics.friction = -0.25
                     Game.battle.timer:after(1, function()
                         fire_small:fadeOutAndRemove(0.5)
@@ -120,17 +120,24 @@ function spell:onCast(user, target)
                 end
             end)
             Game.battle.timer:after(4, function ()
-                user:setScale(2)
-                user.layer = BATTLE_LAYERS["battlers"]
-                user:setAnimation("battle/deflect")
-                user:slideTo(ox, oy, 0.5)
-                target:setFlag("hover", true)
-                target:setFlag("shake2", false)
-                target:setAnimation("idle")
-                Game.battle.timer:after(0.75, function()
+                if not Game:getFlag("prophecied", false) then
+                    Game:setFlag("prophecied", true)
+                    Game.battle:startCutscene("knight.prophecy_breaker")
                     Game:getPartyMember("flowery"):setFlag("afterimage", true)
                     Game.battle:finishAction()
-                end)
+                else
+                    user:setScale(2)
+                    user.layer = BATTLE_LAYERS["battlers"]
+                    user:setAnimation("battle/deflect")
+                    user:slideTo(ox, oy, 0.5)
+                    target:setFlag("hover", true)
+                    target:setFlag("shake2", false)
+                    target:setAnimation("idle")
+                    Game.battle.timer:after(0.75, function()
+                        Game:getPartyMember("flowery"):setFlag("afterimage", true)
+                        Game.battle:finishAction()
+                    end)
+                end
             end)
         end)
     end)

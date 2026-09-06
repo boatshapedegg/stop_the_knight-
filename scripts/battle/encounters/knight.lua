@@ -15,6 +15,31 @@ function Dummy:init()
     self:addEnemy("knight", 550, 280)
 end
 
+function Dummy:getEncounterText()
+    local turn = Game.battle.turn_count
+    local hard = self.knight.health <= self.knight.max_health * 0.6
+
+    if turn % 6 == 0 then
+        if hard == false then return "* Darkness constricts you."
+        else return "* Darkness constricts you.[wait:5]\nYou can barely make out a thing." end
+    elseif turn % 5 == 0 then
+        if hard == false then return "* Your vision narrows.[wait:5] ...[wait:5] Your head is spinning."
+        else return "* You feel cornered." end
+    elseif turn % 4 == 0 then
+        if hard == false then return "* Tectonic plates shift beneath your feet."
+        else return "* It's an earthquake." end
+    elseif turn % 3 == 0 then
+        if hard == false then return "* Suddenly, the north and east winds blew fiercely."
+        else return "* Suddenly, a tempest." end
+    elseif turn % 2 == 0 then
+        if hard == false then return "* You feel surrounded."
+        else return "* Your vision narrows.[wait:5]\nThe world revolves around you." end
+    else
+        if hard == false then return "* You felt lightheaded.[wait:5]\nYou saw golden stars."
+        else return "* You felt lightheaded.[wait:5]\nYou felt a migraine coming on." end
+    end
+end
+
 function Dummy:isAutoHealingEnabled(battler)
     return true
 end

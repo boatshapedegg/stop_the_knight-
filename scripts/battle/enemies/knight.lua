@@ -144,9 +144,13 @@ function Dummy:getAttackDamage(damage, battler, points)
         return damage
     end
     local multiplier = 0.2
+    local ralsei = Game.battle:getPartyBattler("ralsei")
+
     multiplier = MathUtils.clamp(multiplier + Game.battle.turn_count / 100, 0, 0.35)
-    if battler.chara.id == "kris" then
+    if battler.chara.id == "kris" and  ralsei.is_down == false then
         multiplier = multiplier / 2
+    elseif battler.chara.id == "kris" and ralsei.is_down == true then
+        multiplier = multiplier * 3.5
     end
 
     return (((battler.chara:getStat("attack") * points) / 20) - (self.defense * 3)) * multiplier

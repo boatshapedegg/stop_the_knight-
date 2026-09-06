@@ -17,7 +17,7 @@ end
 
 function Dummy:getEncounterText()
     local turn = Game.battle.turn_count
-    local hard = self.knight.health <= self.knight.max_health * 0.6
+    local hard = false
 
     if turn % 6 == 0 then
         if hard == false then return "* Darkness constricts you."
@@ -41,7 +41,7 @@ function Dummy:getEncounterText()
 end
 
 function Dummy:isAutoHealingEnabled(battler)
-    return true
+    return false
 end
 
 function Dummy:canSwoon(target)

@@ -119,4 +119,16 @@ function Dummy:selectWave()
     return self.selected_wave
 end
 
+function Dummy:getAttackDamage(damage, battler, points)
+    if damage > 0 then
+        return damage
+    end
+    local multiplier = 0.7
+    if battler.chara.id == "kris" then
+        multiplier = 0.3
+    end
+
+    return (((battler.chara:getStat("attack") * points) / 20) - (self.defense * 3)) * multiplier
+end
+
 return Dummy

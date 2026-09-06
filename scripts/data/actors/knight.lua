@@ -76,8 +76,6 @@ function actor:init()
         ["pull_back"] = {-20, 0},
     }
 
-    self.siner = 0
-
     self.timer = 0
 end
 
@@ -89,7 +87,7 @@ function actor:onSpriteUpdate(sprite)
             self.afterimage = AfterImage(knight.sprite, 0.6, 0.015)
             local afterimage = self.afterimage
             afterimage.debug_select = false
-            afterimage.x = afterimage.x + 5
+            afterimage.x = afterimage.x + 4
             afterimage.physics.direction = -math.rad(180)
             afterimage.physics.speed = 2
             knight:addChild(afterimage)
@@ -106,8 +104,7 @@ function actor:onSpriteUpdate(sprite)
     end
     
     if knight:getFlag("hover", true) then
-        self.siner = self.siner + DT
-        knight.y = 280 + math.sin(self.siner * 2) * 14
+        sprite.y = math.sin(Kristal.getTime() * 4 + 1) * 5
     end
 end
 

@@ -7,6 +7,7 @@ function Dummy:init()
     self.name = "Knight"
     -- Sets the actor, which handles the enemy's sprites (see scripts/data/actors/dummy.lua)
     self:setActor("knight")
+    multiplier = 0.2
 
     -- Enemy health
     self.max_health = 7300
@@ -17,6 +18,7 @@ function Dummy:init()
     self.defense = 0
     -- Enemy reward
     self.money = 100
+    self.disable_mercy = true
 
     self.tired_percentage = -math.huge
 
@@ -44,30 +46,69 @@ function Dummy:init()
 
     self.battle_offset = {0, 10}
 
-    self:registerAct("Proph. Breaker", "Change The\nFuture", {"ralsei"}, 75, {Game.battle:getPartyBattler("ralsei")}, {"party/flowery/icon/head"})
+    self:registerAct("Proph. Breaker", "Change The\nFuture", {"ralsei"}, 75, self, {"party/flowery/icon/head"})
+end
+
+function Dummy:onTurnEnd()
+    local raly = Game.battle:getPartyBattler("ralsei")
+    if raly.is_down == true then
+        self:registerAct("X-Slash", "Physical\nDamage", nil, 25, self)
+    end
 end
 
 function Dummy:onAct(battler, name)
-   if name == "Standard" then --X-Action
+    if name == "Standard" then --X-Action
         return "* There isn't time for this."
     elseif name == "Proph. Breaker" then
-        local user = "ralsei"
-        local user_index = Game.battle:getPartyIndex(user)
-        local user_battler = Game.battle:getPartyBattler(user)
-        local spell = Registry.createSpell("prophecy_breaker")
-        local target = self
-        local menu_item = {
-            data = spell,
-            tp = 0,
-        }
-        Game.battle:pushAction("SPELL", target, menu_item, user_index)
-        Game.battle:markAsFinished(nil, {user})
+        Game.battle:powerAct("prophecy_breaker", battler, "ralsei", self)
+    elseif name == "Check" then
+        return "* No info found!"
+    
+    elseif name == "X-Slash" then
+        local kris = Game.battle:getPartyBattler("kris")
+        local damage = math.floor((((kris.chara:getStat("attack") * 150) / 20) - 3 * (self.defense)) * 1.3)
+        local function generateSlash(scale_x)
+        local cutAnim = Sprite("effects/attack/cut")
+        Assets.playSound("scytheburst")
+        Assets.playSound("criticalswing", 1.2, 1.3)
+        kris.overlay_sprite:setAnimation("battle/attack") -- Makes the afterimages use the first frame of the attack animation
+        kris:toggleOverlay(true)
+        local afterimage1 = AfterImage(kris, 0.5)
+        local afterimage2 = AfterImage(kris, 0.6)
+        kris:toggleOverlay(false)
+        afterimage1.physics.speed_x = 2.5
+        afterimage2.physics.speed_x = 5
+        afterimage2:setLayer(afterimage1.layer - 1)
+        kris:setAnimation("battle/attack", function()
+        kris:setAnimation("battle/idle")
+        end)
+        kris:flash()
+        cutAnim:setOrigin(0.5, 0.5)
+        cutAnim:setScale(2.5 * scale_x, 2.5)
+        cutAnim:setPosition(self:getRelativePos(self.width/2, self.height/2))
+        cutAnim.layer = self.layer + 0.01
+        cutAnim:play(1/15, false, function(s) s:remove() end)
+        kris.parent:addChild(cutAnim)
+        kris.parent:addChild(afterimage1)
+        kris.parent:addChild(afterimage2)
+        end
+
+        Game.battle.timer:after(0.1/2, function()
+        generateSlash(1)
+        self:hurt(math.floor((damage * multiplier) * 3.25), kris)
+        Game.battle.timer:after(1/2, function()
+        generateSlash(-1)
+        self:hurt(math.floor((damage * multiplier) * 3.25), kris)
+        end)
+        end)
+        end
+        return "* Kris used X-SLASH!"
     end
+    
 
     -- If the act is none of the above, run the base onAct function
     -- (this handles the Check act)
-    return super.onAct(self, battler, name)
-end
+    
 
 function Dummy:getHealthDisplay()
     return "???"
@@ -143,7 +184,7 @@ function Dummy:getAttackDamage(damage, battler, points)
     if damage > 0 then
         return damage
     end
-    local multiplier = 0.2
+    multiplier = 0.2
     local ralsei = Game.battle:getPartyBattler("ralsei")
 
     multiplier = MathUtils.clamp(multiplier + Game.battle.turn_count / 100, 0, 0.35)

@@ -8,6 +8,7 @@ return {
         local user = Game.battle.encounter.flowery
         local target = cutscene:getCharacter("knight")
         local stop = false
+
         Game.battle.timer:everyInstant(0.25, function()
             if stop == true then return false end
             target:shake(math.random(3), math.random(3))
@@ -15,9 +16,9 @@ return {
         Game.battle.timer:everyInstant(1, function ()
             if stop == true then return false end
             target:flash()
-        end)
-        cutscene:text("* nice moves raly", "wink", "flowery")
-
+        end)    
+        cutscene:text("*[voice:flowery] nice moves raly", "wink", "flowery")
+        cutscene:setSpeaker("ralsei")
         cutscene:wait(1)
 
         cutscene:text("* fuck off", "angrier", "ralsei")
@@ -32,6 +33,11 @@ return {
         stop = true
         cutscene:wait(0.5)
         user:setAnimation("party/flowery/idle", 0.2, true)
-        Game.battle:finishAction()
-    end
+
+    end,
+    battle_start = function(cutscene, battler, enemy)
+        cutscene:text("You cannot run away! *Not again!", "angry", "ralsei")
+        cutscene:setSpeaker("flowery")
+        cutscene:text("Heh,[wait:2] that's the spirit, [wait:2] Raly!", "smile")
+    end,
 }

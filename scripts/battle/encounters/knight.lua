@@ -23,7 +23,9 @@ end
 
 function Dummy:onBattleStart()
     self.flowery = Game.battle:addChild(FakeFlowery(40, 28))
+    
 end
+
 
 function Dummy:update()
     super.update(self)

@@ -39,7 +39,7 @@ function spell:onCast(user, target)
 
     target:setFlag("hover", false)
 
-    Game.battle.timer:after(1.5, function()
+    Game.battle.timer:after(0.5, function()
         Assets.playSound("flowery/" .. TableUtils.pick({"jarona_1", "jarona_2", "jarona_3", "jarona_4"}), 2, 1)
 
         self.flowery:slideTo(tx - 50, ty - 70, 1, "in-quad")
@@ -63,10 +63,10 @@ function spell:onCast(user, target)
                 self.flowery.layer = BATTLE_LAYERS["above_battlers"]
 
                 self.flowery:setAnimation("party/flowery/punch", 0.2, false)
-                local damage = self:getDamage(self.flowery, target) * 4
+                local damage = math.floor(self:getDamage(self.flowery, target) * 1.5)
                 Assets.playSound("scytheburst", 1, 0.6)
                 target:flash()
-                target:hurt(damage, user, false)
+                target:hurt(damage, nil, nil, {{254/255, 229/255, 2/255}}, true)
                 target:setAnimation("static")
             end
 
@@ -100,7 +100,7 @@ function spell:onCast(user, target)
                 wait(0.3)
                 fire:remove()
                 Assets.playSound("bomb", 1.75, 1)
-                target:hurt(self:getDamage(user, target) * 7, user, false)
+                target:hurt(math.floor(self:getDamage(user, target) * 1.5), user)
                 target:flash()
                 Game.battle.camera:shake(20, 0, 3)
 

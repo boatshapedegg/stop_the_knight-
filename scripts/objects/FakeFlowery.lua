@@ -6,6 +6,7 @@ function FakeFlowery:init(x, y)
     self.sprite = self:addChild(Sprite("party/flowery/idle", 0, 0))
     self.sprite:setScale(2)
     self.sprite:play(0.15)
+    self.actor = "flowery"
 
     self.width = 39
     self.height = 61

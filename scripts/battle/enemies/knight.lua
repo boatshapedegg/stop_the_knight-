@@ -123,9 +123,10 @@ function Dummy:getAttackDamage(damage, battler, points)
     if damage > 0 then
         return damage
     end
-    local multiplier = 0.7
+    local multiplier = 0.2
+    multiplier = MathUtils.clamp(multiplier + Game.battle.turn_count / 100, 0, 0.35)
     if battler.chara.id == "kris" then
-        multiplier = 0.3
+        multiplier = multiplier / 2
     end
 
     return (((battler.chara:getStat("attack") * points) / 20) - (self.defense * 3)) * multiplier

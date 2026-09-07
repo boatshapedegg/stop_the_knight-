@@ -63,7 +63,17 @@ function Dummy:onAct(battler, name)
     elseif name == "Proph. Breaker" then
         Game.battle:powerAct("prophecy_breaker", battler, "ralsei", self)
     elseif name == "Jarona" then
-        Game.battle:powerAct("jarona", battler, "ralsei", self)
+        local user = "kris"
+        local user_index = Game.battle:getPartyIndex(user)
+        local user_battler = Game.battle:getPartyBattler(user)
+        local spell = Registry.createSpell("jarona")
+        local target = self
+        local menu_item = {
+            data = spell,
+            tp = 0,
+        }
+        Game.battle:pushAction("SPELL", target, menu_item, user_index)
+        Game.battle:markAsFinished(nil, {user})
     elseif name == "Check" then
         return "* No info found!"
     elseif name == "X-Slash" then

@@ -19,6 +19,8 @@ function Dummy:init()
     self.timery = 0
 
     self.hue = 0
+
+    self.cutscened = false
 end
 
 function Dummy:onBattleStart()
@@ -26,6 +28,13 @@ function Dummy:onBattleStart()
     
 end
 
+function Dummy:onBattleStart()
+    Game.battle.battle_ui.action_boxes[Game.battle:getPartyIndex("kris")].buttons[4].disabled = true
+    if self.cutscened == false then
+        Game.battle:startCutscene("knight.battle_start")
+        self.cutscened = true
+    end
+end
 
 function Dummy:update()
     super.update(self)

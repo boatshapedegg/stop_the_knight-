@@ -17,7 +17,7 @@ return {
             if stop == true then return false end
             target:flash()
         end)    
-        cutscene:text("*[voice:flowery] nice moves raly", "wink", "flowery")
+        cutscene:text("*[voice:flowery_1] nice moves raly", "wink", "flowery")
         cutscene:setSpeaker("ralsei")
         cutscene:wait(1)
 
@@ -36,8 +36,9 @@ return {
 
     end,
     battle_start = function(cutscene, battler, enemy)
-        cutscene:text("You cannot run away! *Not again!", "angry", "ralsei")
-        cutscene:setSpeaker("flowery")
-        cutscene:text("Heh,[wait:2] that's the spirit, [wait:2] Raly!", "smile")
+        cutscene:text("* You cannot run away!\n[wait:5]* Not again!", "angry", "ralsei")
+        local flowery = Game.battle:addChild(NPC("flowery", -10, -10))
+        cutscene:setSpeaker(flowery)
+        cutscene:text("* Heh,[wait:5] that's the spirit, [wait:5] Raly!", "wink")
     end,
 }

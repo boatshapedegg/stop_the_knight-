@@ -45,6 +45,7 @@ function actor:init()
         ["front_on"] = {"front_on", 0.25, true},
         ["attack1"]  = {"attack1", 1/15, false},
         ["attack2"]  = {"attack2", 1/15, false},
+        ["crescent"]  = {"crescent_slash", 1/15, false},
         ["static"]   = {"static", 1/15, true},
         ["slash"]    = {"slash", 1/15, false, next = "front_on"},
         ["slash_up"] = {"slash_up", 1/15, false, next = "front_on"},

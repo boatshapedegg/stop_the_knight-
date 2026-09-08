@@ -14,7 +14,9 @@ function FullScreenWave:init()
 end
 
 function FullScreenWave:update()
-    self.kris:setPosition(Game.battle.soul.x - 12, Game.battle.soul.y + 24)
+    if not self.kris.is_down then
+        self.kris:setPosition(Game.battle.soul.x - 12, Game.battle.soul.y + 24)
+    end
     super.update(self)
 end
 

@@ -51,6 +51,7 @@ function actor:init()
         ["slash_up"] = {"slash_up", 1/15, false, next = "front_on"},
         ["throw"]    = {"throw", 1/15, false, next = "front_on"},
         ["point"]    = {"point", 0.1, false},
+        ["fly"]      = {"fly", 1/15, true},
         ["pointend"] = {"pointend", 0.15, false, next = "idle"},
         ["hurt"]     = {"hurt", 1/25, false, temp=true},
 
@@ -62,6 +63,7 @@ function actor:init()
     self.offsets = {
         -- Since the width and height is the idle sprite size, the offset is 0,0
         ["idle"]      = {0, 0},
+        ["down_grab"] = {-4, -6},
         ["front_on"]  = {10, 0},
         ["attack1"]   = {-30, -26},
         ["attack2"]   = {-30, -26},
@@ -82,30 +84,46 @@ end
 
 
 function actor:onSpriteUpdate(sprite)
-    local knight = Game.battle:getEnemyBattler("knight")
-    if self.timer == 8 then
-        if knight.sprite.sprite then
-            self.afterimage = AfterImage(knight.sprite, 0.6, 0.015)
-            local afterimage = self.afterimage
-            afterimage.debug_select = false
-            afterimage.x = afterimage.x + 4
-            afterimage.physics.direction = -math.rad(180)
-            afterimage.physics.speed = 2
-            knight:addChild(afterimage)
-            self.timer = 0
-            if knight:getFlag("shake", false) then
-                afterimage.physics.direction = math.rad(math.random(-50, 50))
+    if Game.battle then
+        local knight = Game.battle:getEnemyBattler("knight")
+        if self.timer == 8 then
+            if knight.sprite.sprite then
+                self.afterimage = AfterImage(knight.sprite, 0.6, 0.015)
+                local afterimage = self.afterimage
+                afterimage.debug_select = false
+                afterimage.x = afterimage.x + 4
+                afterimage.physics.direction = math.rad(180)
+                afterimage.physics.speed = 2
+                knight:addChild(afterimage)
+                self.timer = 0
+                if knight:getFlag("shake", false) then
+                    afterimage.physics.direction = math.rad(math.random(-50, 50))
+                end
+                if knight:getFlag("shake2", false) then
+                    afterimage.physics.direction = math.rad(math.random(360))
+                end
             end
-            if knight:getFlag("shake2", false) then
-                afterimage.physics.direction = math.rad(math.random(360))
-            end
+        else
+            self.timer = self.timer + 1
+        end
+        
+        if knight:getFlag("hover", true) then
+            sprite.y = math.sin(Kristal.getTime() * 4 + 1) * 5
         end
     else
-        self.timer = self.timer + 1
-    end
-    
-    if knight:getFlag("hover", true) then
-        sprite.y = math.sin(Kristal.getTime() * 4 + 1) * 5
+        if self.timer == 4 then
+            if sprite.parent.sprite.sprite then
+                self.afterimage = AfterImage(sprite.parent.sprite, 0.6, 0.015)
+                local afterimage = self.afterimage
+                afterimage.debug_select = false
+                afterimage.physics.direction = math.rad(180)
+                afterimage.physics.speed = 0.5
+                sprite.parent:addChild(afterimage)
+                self.timer = 0
+            end
+        else
+            self.timer = self.timer + 1
+        end
     end
 end
 

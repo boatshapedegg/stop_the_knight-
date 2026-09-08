@@ -10,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 12,
-  nextobjectid = 41,
+  nextobjectid = 42,
   properties = {
     ["name"] = "Test Map - Room 1"
   },
@@ -175,6 +175,21 @@ return {
           rotation = 0,
           visible = true,
           properties = {}
+        },
+        {
+          id = 41,
+          name = "script",
+          type = "",
+          shape = "rectangle",
+          x = 80,
+          y = 200,
+          width = 40,
+          height = 160,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["cutscene"] = "opening"
+          }
         }
       }
     },
@@ -197,7 +212,7 @@ return {
           name = "spawn",
           type = "",
           shape = "point",
-          x = 40,
+          x = 120,
           y = 280,
           width = 0,
           height = 0,

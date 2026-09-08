@@ -8,6 +8,8 @@ function actor:init()
 
         -- Battle animations
         ["battle/idle"]         = {"sword_running", 0.1, true},
+        ["battle/attack_ready"] = {"sword_running", 0.1, true},
+        ["battle/item_ready"]   = {"sword_running", 0.1, true},
     }
 
     TableUtils.merge(self.animations, self.animations2)

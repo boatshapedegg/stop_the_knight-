@@ -15,6 +15,10 @@ function SmallBullet:init(x, y, dir, speed)
     self.destroy_on_hit = false
 end
 
+function SmallBullet:shouldSwoon(damage, target, soul)
+    return true
+end
+
 function SmallBullet:onAdd()
     local duplicate = Game.battle:addChild(Sprite("bullets/crescent", self.x, self.y - 4))
     duplicate:setScale(2, 2)

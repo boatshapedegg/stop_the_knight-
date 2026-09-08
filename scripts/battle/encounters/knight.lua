@@ -24,13 +24,10 @@ function Dummy:init()
 end
 
 function Dummy:onBattleStart()
-    self.flowery = Game.battle:addChild(FakeFlowery(40, 28))
-    
-end
-
-function Dummy:onBattleStart()
     Game.battle.battle_ui.action_boxes[Game.battle:getPartyIndex("kris")].buttons[4].disabled = true
+    Game.battle.battle_ui.action_boxes[Game.battle:getPartyIndex("ralsei")].buttons[4].disabled = true
     if self.cutscened == false then
+        self.flowery = Game.battle:addChild(FakeFlowery(-40, 28))
         Game.battle:startCutscene("knight.battle_start")
         self.cutscened = true
     end

@@ -4,3 +4,8 @@ function Mod:init()
     end)
     print("Loaded " .. self.info.name .. "!")
 end
+
+function Mod:postInit()
+    Game:setFlag("move_Clouds", false)
+    Game:setFlag("move_ground", false)
+end

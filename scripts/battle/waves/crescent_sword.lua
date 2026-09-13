@@ -10,6 +10,7 @@ function Basic:onStart()
     super.onStart(self)
     local knight = self:getAttackers()[1]
     knight:setFlag("hover", false)
+    knight:setFlag("afterimage", false)
     local x_bound, y_bound = {knight.x - 30, knight.x}, {knight.y - 150, knight.y + 50}
 
     self.timer:everyInstant(0.5, function()
@@ -22,8 +23,8 @@ function Basic:onStart()
             local offset = math.random(-70, 70)
             knight:setAnimation("crescent")
             local x2, y2 = knight.x, knight.y
-            local crescent = self:spawnBullet("crescent", x, y - 25, Utils.angle(x, y, Game.battle.soul.x, Game.battle.soul.y - 45 + offset), 13)
-            local crescent2 = self:spawnBullet("crescent2", x, y + 25, Utils.angle(x, y, Game.battle.soul.x, Game.battle.soul.y + 45 + offset), 13)
+            local crescent = self:spawnBullet("crescent", x - 30, y - 25, Utils.angle(x, y, Game.battle.soul.x, Game.battle.soul.y - 45 + offset), 13)
+            local crescent2 = self:spawnBullet("crescent2", x - 30, y + 25, Utils.angle(x, y, Game.battle.soul.x, Game.battle.soul.y + 45 + offset), 13)
             crescent.physics.friction = -0.15
             crescent2.physics.friction = -0.15
         else
@@ -45,6 +46,7 @@ function Basic:onStart()
     end, 11)
 
     self.timer:after(7.75, function ()
+        Game.battle:getEnemyBattler("knight"):setFlag("afterimage", true)
         knight:setFlag("hover", true)
         knight.alpha = 1
         knight:setAnimation("idle")

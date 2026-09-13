@@ -20,11 +20,11 @@ function SmallBullet:shouldSwoon(damage, target, soul)
 end
 
 function SmallBullet:onAdd()
-    local duplicate = Game.battle:addChild(Sprite("bullets/crescent", self.x, self.y - 4))
+    local duplicate = Game.battle:addChild(Sprite("bullets/crescent", self.x, self.y))
     duplicate:setScale(2, 2)
-    Game.battle.timer:tween(0.5, duplicate, {scale_y = 4})
-    duplicate:setScaleOrigin(0, 1)
-    duplicate:fadeOutAndRemove(1)
+    Game.battle.timer:tween(0.3, duplicate, {scale_y = 4})
+    duplicate:setScaleOrigin(0.5)
+    duplicate:fadeOutAndRemove(0.3)
 
     Game.battle.timer:after(0.85, function ()
         self.rotation = math.rad(180)
@@ -37,8 +37,8 @@ function SmallBullet:update()
     super.update(self)
 
     if self.timer == 0 then
-        self:addChild(AfterImage(self, 0.6, 0.1))
-        self.timer = 5
+        self:addChild(AfterImage(self, 0.5, 0.1))
+        self.timer = 3
     end
     self.timer = self.timer - 1
 end

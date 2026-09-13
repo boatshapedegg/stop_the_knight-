@@ -63,7 +63,7 @@ function actor:init()
     self.offsets = {
         -- Since the width and height is the idle sprite size, the offset is 0,0
         ["idle"]      = {0, 0},
-        ["down_grab"] = {-4, -6},
+        ["down_grab"] = {2, -6},
         ["front_on"]  = {10, 0},
         ["attack1"]   = {-30, -26},
         ["attack2"]   = {-30, -26},
@@ -86,7 +86,7 @@ end
 function actor:onSpriteUpdate(sprite)
     if Game.battle then
         local knight = Game.battle:getEnemyBattler("knight")
-        if self.timer == 8 then
+        if self.timer == 8 and knight:getFlag("afterimage", true) then
             if knight.sprite.sprite then
                 self.afterimage = AfterImage(knight.sprite, 0.6, 0.015)
                 local afterimage = self.afterimage

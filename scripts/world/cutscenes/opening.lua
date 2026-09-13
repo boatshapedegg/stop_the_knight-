@@ -2,6 +2,8 @@
 return function(cutscene)
     local kris = cutscene:getCharacter("kris")
     local ral = cutscene:getCharacter("ralsei")
+    local flowery = cutscene:spawnNPC("flowery", 520, 280)
+    flowery:setSprite("kneel_angry")
 
     cutscene:detachFollowers()
     ral:setPosition(-20, kris.y + 40)
@@ -32,11 +34,21 @@ return function(cutscene)
     asgore:setAnimation("kidnapped")
     asgore.physics.speed = 50
 
+    cutscene:wait(0.5)
+
+    flowery:setSprite("kneel_reach")
+
     cutscene:wait(1)
 
     ral:walkTo(kris.x - 20, ral.y, 0.75)
 
-    cutscene:wait(2)
+    cutscene:wait(1)
+
+    flowery:setSprite("kneel_eyes_covered")
+
+    cutscene:wait(1)
+
+    flowery:slideTo(-40, flowery.y, 0.5)
 
     knight:remove()
     asgore:remove()

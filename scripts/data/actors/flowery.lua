@@ -26,7 +26,7 @@ function actor:init()
     self.default = "walk"
 
     -- Sound to play when this actor speaks (optional)
-    self.voice = "flowery_1"
+    self.voice = nil
     -- Path to this actor's portrait for dialogue (optional)
     self.portrait_path = "face/flowery"
     -- Offset position for this actor's portrait (optional)
@@ -116,22 +116,24 @@ function actor:init()
         ["knight_clash"] = {-46, -12},
         ["clash"]        = {-44, -14},
 
-        ["pose"] = {-4, -2},
+        ["pose"]         = {-4, -2},
+
+        ["kneel_reach"]  = {6, -4}
     }
     self.hue = 0
 
     self.timer = 0
 
-    self.voice_timer = 9
+    --self.voice_timer = 9
 end
 
-function actor:onWorldUpdate(chara)
+--[[function actor:onWorldUpdate(chara)
     self.voice_timer = MathUtils.approach(self.voice_timer, 0, DTMULT)
-end
+end]]--
 
 function actor:onBattleUpdate(battler)
     self.hue = (self.hue + DT * 12 / 100) % 1
-    self.voice_timer = MathUtils.approach(self.voice_timer, 0, DTMULT)
+    --self.voice_timer = MathUtils.approach(self.voice_timer, 0, DTMULT)
 
     local flowery = Game:getPartyMember("flowery")
     local flowery2 = Game.battle:getPartyBattler("flowery")
@@ -152,11 +154,11 @@ function actor:onBattleUpdate(battler)
 end
 
 function actor:onTextSound()
-    if self.voice_timer == 0 then
+    --if self.voice_timer == 0 then
         local random_num = math.random(1, 3)
         Assets.playSound("voice/flowery_"..random_num)
-        self.voice_timer = 5/2
-    end
+        --self.voice_timer = 5/2
+    --end
 
     return true
 end

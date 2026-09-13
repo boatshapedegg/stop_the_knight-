@@ -12,7 +12,7 @@ function Dummy:init()
     self.background = false
 
     -- Add the dummy enemy to the encounter
-    self.knight = self:addEnemy("knight", 550, 280)
+    self.knight = self:addEnemy("knight", 725, 280)
 
     self.f_voice_timer = 0
 
@@ -27,7 +27,7 @@ function Dummy:onBattleStart()
     Game.battle.battle_ui.action_boxes[Game.battle:getPartyIndex("kris")].buttons[4].disabled = true
     Game.battle.battle_ui.action_boxes[Game.battle:getPartyIndex("ralsei")].buttons[4].disabled = true
     if self.cutscened == false then
-        self.flowery = Game.battle:addChild(FakeFlowery(-40, 28))
+        self.flowery = Game.battle:addChild(FakeFlowery(-110, 28))
         Game.battle:startCutscene("knight.battle_start")
         self.cutscened = true
     end

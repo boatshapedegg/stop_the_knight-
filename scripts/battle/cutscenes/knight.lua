@@ -17,11 +17,12 @@ return {
             if stop == true then return false end
             target:flash()
         end)    
-        cutscene:text("*[voice:flowery_1] nice moves raly", "wink", "flowery")
+        cutscene:setSpeaker(Registry.createActor("flowery"))
+        cutscene:text("*[voice:flowery_1] nice moves raly", "wink")
         cutscene:setSpeaker("ralsei")
         cutscene:wait(1)
 
-        cutscene:text("* fuck off", "angrier", "ralsei")
+        cutscene:text("* fuck off", "angrier")
 
         user:setScale(1)
         user.layer = BATTLE_LAYERS["above_battlers"]
@@ -39,9 +40,8 @@ return {
         local knight = cutscene:getCharacter("knight")
         cutscene:getCharacter("kris"):setAnimation("battle/idle")
         cutscene:getCharacter("ralsei"):setAnimation("battle/idle")
-        Game.world.timer:tween(0.5, Game.battle.encounter.flowery, {x = 40}, "out-back")
-
-        knight.x = SCREEN_WIDTH + 75
+        cutscene:wait(2.5)
+        Game.world.timer:tween(0.75, Game.battle.encounter.flowery, {x = 40}, "out-back")
 
         cutscene:wait(2)
 
@@ -84,8 +84,11 @@ return {
 
         cutscene:wait(2.5)
 
-        cutscene:text("* You cannot run away!\n[wait:5]* Not again!", "angry", "ralsei")
-        cutscene:text("* Heh,[wait:5] that's the spirit, [wait:5] Raly!", "wink", "flowery")
+        local ralsei = cutscene:getCharacter("ralsei")
+        local text = ralsei:spawnSpeechBubble("You cannot run away![wait:10]\nNot again!", {right = true})
+        cutscene:wait(function () return text:isRemoved() end)
+        cutscene:setSpeaker(Registry.createActor("flowery"))
+        cutscene:text("* Heh,[wait:5] that's the spirit, [wait:5] Raly!", "wink")
 
 
         orb:slideTo(SCREEN_WIDTH + 85, orb.y, 1.5, "in-back")

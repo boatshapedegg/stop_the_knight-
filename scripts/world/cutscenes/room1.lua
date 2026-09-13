@@ -7,8 +7,15 @@ return {
         -- Open textbox and wait for completion
         cutscene:text("* The wall seems cracked.")
 
-        local flowery = cutscene:getCharacter("flowery")
-        cutscene:setSpeaker(flowery)
+        cutscene:setSpeaker("flowery")
         cutscene:text("* What wall", "wink")
-    end
+    end,
+
+    wall_alt = function(cutscene, event)
+        -- Open textbox and wait for completion
+        cutscene:text("* The wall seems cracked.")
+
+        cutscene:setSpeaker(cutscene:getCharacter("flowery"))
+        cutscene:text("* What wall", "wink")
+    end,
 }

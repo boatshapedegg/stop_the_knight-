@@ -41,7 +41,7 @@ function actor:init()
     self.animations = {
         -- Looping animation with 0.25 seconds between each frame
         -- (even though there's only 1 idle frame)
-        ["run"]      = {"run", 0.25, true},
+        ["run"]      = {"run", 0.2, true},
         ["floating"] = {"trapped", 0.1, true},
         ["kidnapped"]= {"kidnapped", 0.1, true},
     }

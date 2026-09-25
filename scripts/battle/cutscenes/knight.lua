@@ -54,17 +54,25 @@ return {
         local orb2 = Sprite("npcs/asgore/orb_outline", SCREEN_WIDTH + 90, knight.y - 200)
         orb2:setScale(2)
         orb2:setOrigin(0.5)
-        orb2:setLayer(knight.layer + 4)
+        orb2:setLayer(knight.layer + 5)
         Game.battle:addChild(orb2)
 
-        local siner = 0
+        local orb3 = Sprite("npcs/asgore/orb", SCREEN_WIDTH + 90, knight.y - 200)
+        orb3:setScale(1.9)
+        orb3:setOrigin(0.5)
+        orb3:setLayer(knight.layer + 4)
+        orb3.alpha = 0.1
+        Game.battle:addChild(orb3)
 
-        cutscene:during(function ()
-            if not orb then return false end
-            siner = siner + DT
-            orb:setScale(2 + math.sin(siner) / 3)
-            orb2:setScale(2 + math.sin(siner) / 3)
-        end)
+        local rect = Sprite("bullets/stars_mask", SCREEN_WIDTH + 90, knight.y - 200)
+        rect:setScale(2)
+        rect:setOrigin(0.5)
+        rect:setLayer(knight.layer + 6)
+        rect.alpha = 0.75
+        rect:addFX(MaskFX(orb3))
+        rect:setWrap(true)
+        rect.physics.speed_x = -8
+        Game.battle:addChild(rect)
 
         local asgore = Sprite("npcs/asgore/trapped", SCREEN_WIDTH + 90, knight.y - 200)
         asgore:setScale(2)
@@ -74,8 +82,24 @@ return {
         Game.battle:addChild(asgore)
         asgore:addFX(MaskFX(orb))
 
+        local siner = 0
+
+        cutscene:during(function ()
+            if not orb then return false end
+            siner = siner + DT
+            orb:setScale(2 + math.sin(siner / 2) / 5)
+            orb2:setScale(2 + math.sin(siner / 2) / 5)
+            orb3:setScale(1.9 + math.sin(siner / 2) / 5)
+
+            orb.y = knight.y - 200 + math.sin(siner * 3) * 4
+            orb2.y = knight.y - 200 + math.sin(siner * 3) * 4
+            orb3.y = knight.y - 200 + math.sin(siner * 3) * 4
+            asgore.y = knight.y - 200 + math.sin(siner * 3) * 4
+        end)
+
         orb:slideTo(570, orb.y, 1.6)
         orb2:slideTo(570, orb2.y, 1.6)
+        orb3:slideTo(570, orb3.y, 1.6)
         asgore:slideTo(570, asgore.y, 1.6)
 
         knight:setSprite("down_grab")
@@ -93,12 +117,15 @@ return {
 
         orb:slideTo(SCREEN_WIDTH + 85, orb.y, 1.5, "in-back")
         orb2:slideTo(SCREEN_WIDTH + 85, orb2.y, 1.5, "in-back")
+        orb3:slideTo(SCREEN_WIDTH + 85, orb3.y, 1.5, "in-back")
         asgore:slideTo(SCREEN_WIDTH + 85, asgore.y, 1.5, "in-back")
 
         cutscene:wait(1.5)
 
         orb:remove()
         orb2:remove()
+        rect:remove()
+        orb3:remove()
         asgore:remove()
 
         cutscene:wait(0.5)

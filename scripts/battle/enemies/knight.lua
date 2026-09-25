@@ -46,7 +46,7 @@ function Dummy:init()
 
     self.battle_offset = {0, 10}
 
-    self:registerAct("Proph. Breaker", "Change The\nFuture", {"ralsei"}, 75, self, {"party/flowery/icon/head"})
+    self:registerAct("Proph. Breaker", "Change The\nFuture", {"ralsei"}, 75, {self, Game.battle:getPartyBattler("ralsei")}, {"party/flowery/icon/head"})
     self:registerAct("Jarona", "His\nJarona", nil, 99, self, {"party/flowery/icon/head"})
 end
 

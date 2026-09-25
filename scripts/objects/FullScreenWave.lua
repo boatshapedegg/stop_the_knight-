@@ -11,11 +11,33 @@ function FullScreenWave:init()
     self:setArenaPosition(-90, SCREEN_HEIGHT/2)
     self:setSoulPosition(self.krisx + 12, self.krisy - 24)
     self.layer = BATTLE_LAYERS["below_battlers"]
+
+    self.can_parry = true
+    self.parry_timer = 0
 end
 
 function FullScreenWave:update()
+    Logging.info(self.kris.parrying)
+    self.parry_timer = self.parry_timer - 1
+    if self.parry_timer <= 0 then self.can_parry = true end
     if not self.kris.is_down then
         self.kris:setPosition(Game.battle.soul.x - 12, Game.battle.soul.y + 24)
+    end
+
+    if Input.pressed("confirm") then
+        if self.can_parry then
+            self.kris.parrying = true
+            self.kris:setAnimation("battle/attack")
+            self.can_parry = false
+            self.parry_timer = 60
+            Game.battle.timer:after(1/3, function()
+                self.kris.parrying = false
+                self.kris:setAnimation("battle/idle")
+            end)
+            Game.battle.timer:after(0.75, function()
+                self.kris:setAnimation("battle/idle")
+            end)
+        end
     end
     super.update(self)
 end

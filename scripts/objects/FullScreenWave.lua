@@ -17,7 +17,6 @@ function FullScreenWave:init()
 end
 
 function FullScreenWave:update()
-    Logging.info(self.kris.parrying)
     self.parry_timer = self.parry_timer - 1
     if self.parry_timer <= 0 then self.can_parry = true end
     if not self.kris.is_down then
@@ -30,9 +29,8 @@ function FullScreenWave:update()
             self.kris:setAnimation("battle/attack")
             self.can_parry = false
             self.parry_timer = 60
-            Game.battle.timer:after(1/3, function()
+            Game.battle.timer:after(0.15, function()
                 self.kris.parrying = false
-                self.kris:setAnimation("battle/idle")
             end)
             Game.battle.timer:after(0.75, function()
                 self.kris:setAnimation("battle/idle")

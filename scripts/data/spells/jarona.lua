@@ -30,7 +30,7 @@ end
 
 function spell:onCast(user, target)
     self.flowery = Game.battle.encounter.flowery
-    self.flowery:setAnimation("party/flowery/pose", 0.2, true)
+    self.flowery:setAnimation("pose", 0.2, true)
     Assets.playSound("cardrive", 1, 1)
 
     local tx, ty = target:getRelativePos(target.width/2, target.height/2, Game.battle)
@@ -75,7 +75,7 @@ function spell:onCast(user, target)
                 end
 
                 Game.battle.timer:tween(timer - 0.05, self.flowery, {x = next_x, y = next_y})
-                self.flowery:setAnimation("party/flowery/" .. TableUtils.pick({"punch", "kick", "flashkick", "axe_kick"}), 0.2, false)
+                self.flowery:setAnimation(TableUtils.pick({"punch", "kick", "flashkick", "axe_kick"}), 0.2, false)
                 local damage = self:getDamage(user, target, false)
                 Assets.playSound("scytheburst", 1, 0.6)
                 target:flash()
@@ -118,18 +118,18 @@ function spell:onCast(user, target)
                 end, 4)
                 wait(timer)
                 Game.battle.timer:tween(1, self.flowery, {x = target.x - 150, y = target.y - 100})
-                self.flowery:setAnimation("party/flowery/pose", 0.2, true)
+                self.flowery:setAnimation("pose", 0.2, true)
             end)
             Game.battle.timer:after(4, function ()
                 self.flowery:setScale(1)
                 self.flowery.layer = BATTLE_LAYERS["above_battlers"]
-                self.flowery:setAnimation("party/flowery/deflect", 0.2, true)
+                self.flowery:setAnimation("deflect", 0.2, true)
                 self.flowery:slideTo(ox, oy, 0.5)
                 target:setFlag("hover", true)
                 target:setFlag("shake2", false)
                 target:setAnimation("idle")
                 Game.battle.timer:after(0.75, function()
-                    self.flowery:setAnimation("party/flowery/idle", 0.2, true)
+                    self.flowery:setAnimation("idle", 0.2, true)
                     self.flowery.afterimage = true
                     Game.battle:finishAction()
                 end)

@@ -24,6 +24,8 @@ function Dummy:init()
 end
 
 function Dummy:onBattleStart()
+    local kris = Game.battle:getPartyBattler("kris")
+    kris:setHitbox(10, 0, 10, 60)
     Game.battle.battle_ui.action_boxes[Game.battle:getPartyIndex("kris")].buttons[4].disabled = true
     Game.battle.battle_ui.action_boxes[Game.battle:getPartyIndex("ralsei")].buttons[4].disabled = true
     if self.cutscened == false then

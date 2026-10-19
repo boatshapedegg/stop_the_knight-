@@ -28,10 +28,7 @@ function Basic:onStart()
                 knife.launched = true
             end)
             Game.battle.timer:after(1, function ()
-                knife.physics.speed = 70
-                knife.physics.friction = -0.25
-                knife:addFX(ColorMaskFX({1,1,1}, 1))
-                knife:setScale(2.25, 0.75)
+                knife:zip()
             end)
             counter = counter + 1
         end, 6)

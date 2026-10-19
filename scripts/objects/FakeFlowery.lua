@@ -3,7 +3,8 @@ local FakeFlowery, super = Class(Object)
 function FakeFlowery:init(x, y)
     super.init(self, x, y)
 
-    self.sprite = self:addChild(Sprite("party/flowery/idle", 0, 0))
+    self.path = "party/flowery/"
+    self.sprite = self:addChild(Sprite(self.path .. "idle", 0, 0))
     self.sprite:setScale(2)
     self.sprite:play(0.15)
     self.actor = "flowery"
@@ -16,6 +17,10 @@ function FakeFlowery:init(x, y)
     self.timer = 0
 
     self.afterimage = true
+end
+
+function FakeFlowery:setSprite(sprite)
+    self.sprite:setSprite(self.path .. sprite)
 end
 
 function FakeFlowery:update()
@@ -39,7 +44,7 @@ function FakeFlowery:update()
 end
 
 function FakeFlowery:setAnimation(sprite, speed, loop)
-    self.sprite:setSprite(sprite)
+    self.sprite:setSprite(self.path .. sprite)
     self.sprite:play(speed, loop)
 end
 

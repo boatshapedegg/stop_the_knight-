@@ -34,10 +34,7 @@ function Basic:onStart()
             local knife = self:spawnBullet("sword_nocode", x2, y2, Utils.angle(x2, y2, Game.battle.soul.x, Game.battle.soul.y), 0, true, 0.2)
 
             self.timer:after(0.2, function()
-                knife.physics.speed = 60
-                knife.physics.friction = -0.05
-                knife:addFX(ColorMaskFX({1,1,1}, 1))
-                knife:setScale(2.25, 0.75)
+                knife:zip()
             end)
         end
         self.timer:after(0.3, function()

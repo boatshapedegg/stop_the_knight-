@@ -12,11 +12,19 @@ function SmallBullet:init(x, y, dir, speed)
     self:setScale(1)
 
     self.destroy_on_parry = false
+
+    self.destroy_on_hit = false
+
+    self:setHitbox(23,21,17,17)
+
+    self.parry_dist = 40
 end
 
 function SmallBullet:onParry()
     self:setColor(1,0,0)
-    Game.battle.timer:after(0.5, function ()
+    Assets.playSound("damage")
+    self.physics.speed = self.physics.speed * 0.6
+    Game.battle.timer:after(0.1, function ()
         self:fadeOutAndRemove(0.25)
     end)
 end

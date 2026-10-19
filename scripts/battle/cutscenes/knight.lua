@@ -26,14 +26,14 @@ return {
 
         user:setScale(1)
         user.layer = BATTLE_LAYERS["above_battlers"]
-        user:setAnimation("party/flowery/deflect", 0.2, true)
+        user:setAnimation("deflect", 0.2, true)
         user:slideTo(40, 28, 0.5)
         target:setFlag("hover", true)
         target:setFlag("shake2", false)
         target:setAnimation("idle")
         stop = true
         cutscene:wait(0.5)
-        user:setAnimation("party/flowery/idle", 0.2, true)
+        user:setAnimation("idle", 0.2, true)
 
     end,
     battle_start = function(cutscene, battler, enemy)

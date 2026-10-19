@@ -29,7 +29,7 @@ function FullScreenWave:update()
             self.kris:setAnimation("battle/attack")
             self.can_parry = false
             self.parry_timer = 60
-            Game.battle.timer:after(0.15, function()
+            Game.battle.timer:after(0.3, function()
                 self.kris.parrying = false
             end)
             Game.battle.timer:after(0.75, function()

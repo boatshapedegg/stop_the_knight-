@@ -18,11 +18,11 @@ return {
             target:flash()
         end)    
         cutscene:setSpeaker(Registry.createActor("flowery"))
-        cutscene:text("*[voice:flowery_1] nice moves raly", "wink")
+        cutscene:text("* Nice moves,[wait:5] Raly!", "wink")
         cutscene:setSpeaker("ralsei")
         cutscene:wait(1)
 
-        cutscene:text("* fuck off", "angrier")
+        cutscene:text("* Desperate times call for desperate measures,[wait:5] Flowery!", "determined")
 
         user:setScale(1)
         user.layer = BATTLE_LAYERS["above_battlers"]
@@ -35,6 +35,8 @@ return {
         cutscene:wait(0.5)
         user:setAnimation("idle", 0.2, true)
 
+        cutscene:after(function() Game.battle:setState("ACTIONSDONE") end, true)
+        cutscene:endCutscene()
     end,
     battle_start = function(cutscene, battler, enemy)
         local knight = cutscene:getCharacter("knight")

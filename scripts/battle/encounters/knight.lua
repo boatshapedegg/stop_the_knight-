@@ -21,6 +21,8 @@ function Dummy:init()
     self.hue = 0
 
     self.cutscened = false
+
+    self.first_waved = false
 end
 
 function Dummy:onBattleStart()
@@ -32,6 +34,15 @@ function Dummy:onBattleStart()
         self.flowery = Game.battle:addChild(FakeFlowery(-110, 28))
         Game.battle:startCutscene("knight.battle_start")
         self.cutscened = true
+    end
+end
+
+function Dummy:onStateChange(old, new, reason)
+    super.onStateChange(self,old,new,reason)
+    if new == "ACTIONSELECT" and not self.first_waved then
+        self.first_waved = true
+        Logging.infoNotify(Game.battle.turn_count)
+        Game.battle:setState("ACTIONSDONE")
     end
 end
 

@@ -62,9 +62,9 @@ function SmallBullet:zip()
             afterimage.debug_select = false
         end
         Game.battle.timer:after(DT, function()
-            local rect = Game.battle:addChild(Rectangle(self.x - 1, self.y, 800, 2))
-            rect.rotation = self.rotation
-            self:setHitbox(0, 14, 800, 2)
+            local rect = self:addChild(Rectangle(0, 5, 900, 2))
+            rect:setOrigin(0.5)
+            self:setHitbox(0, self.sprite.height/2 - 10, 500, 2)
             rect.layer = BATTLE_LAYERS["above_bullets"]
             --rect:addFX(MaskFX(Game.battle.arena))
             Game.battle.timer:after(DT * 3, function()

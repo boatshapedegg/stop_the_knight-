@@ -44,6 +44,9 @@ function Basic:onStart()
 
         self.timer:after(0.55, function ()
             Game.stage.timer:tween(1, Game.battle, {timescale = 0}, "out-cubic", function ()
+                Assets.playSound("great_shine", 1, 0.8)
+                Assets.playSound("great_shine", 1)
+                Assets.playSound("closet_impact", 1, 1.5)
                 self.parry_timer = 0
                 self.frozen = true
             end)

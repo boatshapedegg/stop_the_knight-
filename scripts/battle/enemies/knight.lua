@@ -7,7 +7,6 @@ function Dummy:init()
     self.name = "Knight"
     -- Sets the actor, which handles the enemy's sprites (see scripts/data/actors/dummy.lua)
     self:setActor("knight")
-    multiplier = 0.2
 
     -- Enemy health
     self.max_health = 7300
@@ -26,7 +25,11 @@ function Dummy:init()
     self.spare_points = 0
 
     -- List of possible wave ids, randomly picked each turn
-    self.waves = {}
+    self.waves = {
+        "crescent_sword", -- last
+        "full_screen_test", -- first
+        "melee"
+    }
 
     -- Check text (automatically has "ENEMY NAME - " at the start)
     self.check = "Nothing happened."
@@ -126,43 +129,10 @@ function Dummy:selectWave()
     local turn = Game.battle.turn_count
     local hard = self.health <= self.max_health * 0.6
 
-    if turn % 6 == 0 then
-        if hard == false then
-            self.selected_wave = "knight/fountain_maker_1"
-        else
-            self.selected_wave = "knight/fountain_maker_2"
-        end
-    elseif turn % 5 == 0 then
-        if hard == false then
-            self.selected_wave = "knight/sword_corridor_1"
-        else
-            self.selected_wave = "knight/sword_corridor_2"
-        end
-    elseif turn % 4 == 0 then
-        if hard == false then
-            self.selected_wave = "knight/sword_box_1"
-        else
-            self.selected_wave = "knight/sword_box_2"
-        end
-    elseif turn % 3 == 0 then
-        if hard == false then
-            self.selected_wave = "knight/box_splitter_1"
-        else
-            self.selected_wave = "knight/box_splitter_2"
-        end
-    elseif turn % 2 == 0 then
-        if hard == false then
-            self.selected_wave = "knight/sword_trackers_1"
-        else
-            self.selected_wave = "knight/sword_trackers_2"
-        end
-    else
-        if hard == false then
-            self.selected_wave = "full_screen_test"
-        else
-            self.selected_wave = "knight/stars_2"
-        end
-    end
+    local path = "_1"
+    if hard then path = "_2" end
+    if Game.battle.turn_count == 1 then self.selected_wave = "intro" return "intro" end
+    self.selected_wave = self.waves[MathUtils.wrapIndex(turn, #self.waves)] .. path
     return self.selected_wave
 end
 
@@ -170,7 +140,7 @@ function Dummy:getAttackDamage(damage, battler, points)
     if damage > 0 then
         return damage
     end
-    multiplier = 0.2
+    local multiplier = 0.2
     local ralsei = Game.battle:getPartyBattler("ralsei")
 
     multiplier = MathUtils.clamp(multiplier + Game.battle.turn_count / 100, 0, 0.35)

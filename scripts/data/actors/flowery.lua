@@ -26,7 +26,7 @@ function actor:init()
     self.default = "walk"
 
     -- Sound to play when this actor speaks (optional)
-    self.voice = nil
+    self.voice = "flowery_1"
     -- Path to this actor's portrait for dialogue (optional)
     self.portrait_path = "face/flowery"
     -- Offset position for this actor's portrait (optional)
@@ -154,11 +154,11 @@ function actor:onBattleUpdate(battler)
 end
 
 function actor:onTextSound()
-    --if self.voice_timer == 0 then
+    if Game.battle.flowery_timer == 0 then
         local random_num = math.random(1, 3)
         Assets.playSound("voice/flowery_"..random_num)
-        --self.voice_timer = 5/2
-    --end
+        Game.battle.flowery_timer = 5/2
+    end
 
     return true
 end

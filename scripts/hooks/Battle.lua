@@ -1,5 +1,9 @@
 local Battle, super = HookSystem.hookScript(Battle)
 
+function Battle:init()
+    super.init(self)
+    self.flowery_timer = 0
+end
 
 function Battle:powerAct(spell, battler, user, target)
 
@@ -57,5 +61,10 @@ function Battle:powerAct(spell, battler, user, target)
     end)
 end
 
+function Battle:update()
+    super.update(self)
+
+    self.flowery_timer = MathUtils.approach(self.flowery_timer, 0, DTMULT)
+end
 
 return Battle
